@@ -3,8 +3,20 @@
     <nav-bar />
     <div class="card">
       hello
-      <p>Counter value is {{ counter }}</p>
-      <button @click="incrementMethod" class="btn">increment counter</button>
+      <!-- <p>LocalCounter value is {{ localCounter }}</p>
+      <button @click="incrementMethod" class="btn">increment counter</button> -->
+      <!-- <p>Store counter value is {{ $store.state.counter }}</p> -->
+      <p>
+        Store counter value is {{ counterFromStore }} Store double counter value
+        is {{ doubleCounterFromStore }}
+      </p>
+
+      <button @click="$store.state.counter++" class="btn">
+        increment counter directly
+      </button>
+      <button @click="incrStoreMethod" class="btn">
+        increment counter via commit
+      </button>
     </div>
   </div>
 </template>
@@ -16,12 +28,23 @@ export default {
   components: { NavBar },
   data() {
     return {
-      counter: 0,
+      // localCounter: 0,
     };
   },
+  computed: {
+    counterFromStore() {
+      return this.$store.getters.justCounter;
+    },
+    doubleCounterFromStore() {
+      return this.$store.getters.doubleCounter;
+    },
+  },
   methods: {
-    incrementMethod() {
-      this.counter++;
+    // incrementMethod() {
+    //   this.counter++;
+    // },
+    incrStoreMethod() {
+      this.$store.commit("incrementCounter");
     },
   },
 };
