@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="container">
+    <nav-bar />
+    <div class="card">
+      hello
+      <p>Counter value is {{ counter }}</p>
+      <button @click="incrementMethod" class="btn">increment counter</button>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import NavBar from "./components/NavBar.vue";
 export default {
   name: "App",
-  components: {
-    HelloWorld,
+  components: { NavBar },
+  data() {
+    return {
+      counter: 0,
+    };
+  },
+  methods: {
+    incrementMethod() {
+      this.counter++;
+    },
   },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import "./styles.css";
+.container {
+  background: gray;
+}
+.card {
+  width: 500px;
+  margin: 0 auto;
+  background: white;
+  height: 500px;
+  border-radius: 10px;
 }
 </style>
