@@ -10,18 +10,24 @@
         Store counter value is {{ counterFromStore }} Store double counter value
         is {{ doubleCounterFromStore }}
       </p>
-
-      <button @click="$store.state.counter++" class="btn">
-        increment counter directly
-      </button>
-      <button @click="incrStoreMethod" class="btn">
+      <p>this is title from store: {{ upTitle }}</p>
+      <button @click="showInfo" class="btn">increment counter directly</button>
+      <!-- <button @click="incrStoreMethod" class="btn">
         increment counter via commit
+      </button> -->
+      <button @click="incrementCounter" class="btn">
+        increment counter via mutations
+      </button>
+      <!-- <button @click="incrAsync" class="btn">async incr counter</button> -->
+      <button @click="incrAsync({ num: 10 })" class="btn">
+        async incr counter
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import NavBar from "./components/NavBar.vue";
 export default {
   name: "App",
@@ -32,19 +38,34 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["justCounter", "doubleCounter", "upTitle"]),
+
     counterFromStore() {
-      return this.$store.getters.justCounter;
+      // return this.$store.getters.justCounter;
+      return this.justCounter;
     },
     doubleCounterFromStore() {
-      return this.$store.getters.doubleCounter;
+      // return this.$store.getters.doubleCounter;
+      return this.doubleCounter;
     },
   },
   methods: {
     // incrementMethod() {
     //   this.counter++;
     // },
-    incrStoreMethod() {
-      this.$store.commit("incrementCounter");
+    ...mapMutations(["incrementCounter"]),
+    ...mapActions({ incrAsync: "incrAsync" }),
+
+    // incrStoreMethod() {
+    // this.$store.commit("incrementCounter");
+    // },
+
+    // incrAsync() {
+    //   this.$store.dispatch("incrAsync", { num: 10 });
+    // },
+    showInfo() {
+      console.log(this.$store.state.counter);
+      console.log(this.$store.state.appTitle);
     },
   },
 };

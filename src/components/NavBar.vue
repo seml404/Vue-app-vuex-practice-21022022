@@ -2,9 +2,14 @@
   <div class="nav-bar-wrapper">
     <div class="nav-bar">
       this is navbar
-      <p>Counter in store is {{ counterNavBar }}</p>
+      <!-- <p>Counter in store is {{ counterNavBar }}</p> -->
+      <p>Counter in store is test {{ justCounter }}</p>
+
       <button class="btn" @click="$store.commit('addFive')">
         Add 5 to counter
+      </button>
+      <button class="btn" @click="addNumber({ num: 10 })">
+        Add number through mapMutations
       </button>
       <button class="btn" @click="addNum">Add num to counter</button>
     </div>
@@ -12,13 +17,16 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
   computed: {
-    counterNavBar() {
-      return this.$store.state.counter;
-    },
+    ...mapGetters(["justCounter"]),
+    // counterNavBar() {
+    //   return this.$store.state.counter;
+    // },
   },
   methods: {
+    ...mapMutations(["addNumber"]),
     addNum() {
       //   this.$store.commit("addNumber", 10);
 
